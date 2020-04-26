@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Iterates over the image files in a directory, and batch converts any png, tif, tiff or jfiff files to jpg files.
+Deletes the existing file after writing the new jpg version
+To use, replace the path in quotes on line 15 with the path to the directory containing your images
+"""
+
+
+from PIL import Image  # Python Image Library - Image Processing
+import os
+import glob
+
+Image.MAX_IMAGE_PIXELS = None
+
+# replace /home/pi/art with the path of the directory containing your images
+os.chdir(r"/home/pi/art") 
+
+for file in glob.glob("*.png"):
+     im = Image.open(file)
+     rgb_im = im.convert('RGB')
+     rgb_im.save(file.replace("png", "jpg"), quality=95)
+     os.remove(file)  
+
+for file in glob.glob("*.tif"):
+     im = Image.open(file)
+     rgb_im = im.convert('RGB')
+     rgb_im.save(file.replace("tif", "jpg"), quality=95)
+     os.remove(file)
+
+for file in glob.glob("*.tiff"):
+     im = Image.open(file)
+     rgb_im = im.convert('RGB')
+     rgb_im.save(file.replace("tiff", "jpg"), quality=95)
+     os.remove(file)
+
+for file in glob.glob("*.jfif"):
+     im = Image.open(file)
+     rgb_im = im.convert('RGB')
+     im.save(file.replace("jfif", "jpg"), quality=95)
+     os.remove(file)
